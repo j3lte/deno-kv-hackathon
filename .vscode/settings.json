@@ -10,4 +10,9 @@
     "editor.formatOnSave": true,
     "editor.tabSize": 2
   },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "denoland.vscode-deno",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
 }

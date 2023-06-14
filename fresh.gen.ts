@@ -10,6 +10,7 @@ import * as $3 from "./routes/auth/callback.ts";
 import * as $4 from "./routes/auth/signin.ts";
 import * as $5 from "./routes/auth/signout.ts";
 import * as $6 from "./routes/index.tsx";
+import * as $$0 from "./islands/CreateSecret.tsx";
 
 const manifest = {
   routes: {
@@ -21,7 +22,9 @@ const manifest = {
     "./routes/auth/signout.ts": $5,
     "./routes/index.tsx": $6,
   },
-  islands: {},
+  islands: {
+    "./islands/CreateSecret.tsx": $$0,
+  },
   baseUrl: import.meta.url,
   config,
 };

@@ -51,6 +51,8 @@ export async function addSecret(
   if (user) {
     await kv.set([KV_SET.SECRETS_BY_USER, user.id, id], secret);
   }
+
+  return true;
 }
 
 export async function getSecret(id: string): Promise<Secret | null> {
