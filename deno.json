@@ -1,7 +1,9 @@
 {
   "lock": false,
   "tasks": {
-    "start": "deno run -A --unstable --watch=static/,routes/ dev.ts"
+    "start": "deno run -A --unstable --watch=static/,routes/ dev.ts",
+    "format": "deno fmt ./components/ ./islands/ ./routes/ ./utils/",
+    "lint": "deno lint ./components/ ./islands/ ./routes/ ./utils/"
   },
   "importMap": "./import_map.json",
   "compilerOptions": {
