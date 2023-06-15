@@ -37,6 +37,7 @@ This will watch the project directory and restart as necessary.
 - `GITHUB_CLIENT_ID` - The Github client ID for OAuth
 - `GITHUB_CLIENT_SECRET` - The Github client secret for OAuth
 - `ADMIN_USER_ID` - A user id (or comma separated list of user ids) that will be granted admin access to the site. This is used to delete secrets.
+- `LIVE_URL` - The URL of the live site. This is used for some SEO purposes
 - `MAX_DECRYPT_ATTEMPTS` - _(Optional, default: 3)_ - The maximum number of attempts to decrypt a secret before it is deleted. This is used to prevent brute force attacks.
 - `MAX_SECRET_LENGTH` - _(Optional, default: 1024)_ - The maximum length of a secret.
 

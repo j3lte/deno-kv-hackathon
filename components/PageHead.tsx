@@ -4,7 +4,7 @@ import { PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 
 import { User } from "@utils/types.ts";
-import { APP_NAME } from "@utils/const.ts";
+import { APP_NAME, LIVE_URL } from "@utils/const.ts";
 import { Header } from "./Header.tsx";
 
 export interface Props {
@@ -16,8 +16,9 @@ export interface Props {
 
 export default function PageHead({ props, hideButton }: Props): JSX.Element {
   const description = "A simple, secure, and private way to share secrets.";
-  const image = "https://exchange-secrets.deno.dev/screenshot.png";
-  const image_og = "https://exchange-secrets.deno.dev/screenshot_og.png";
+  const image = LIVE_URL ? `${LIVE_URL}/screenshot.png` : null;
+  const image_og = LIVE_URL ? `${LIVE_URL}/screenshot_og.png` : null;
+  const url = LIVE_URL ? `${LIVE_URL}/` : null;
 
   return (
     <>
@@ -62,7 +63,7 @@ export default function PageHead({ props, hideButton }: Props): JSX.Element {
           content={description}
         />
         <meta name="twitter:creator" content="@j3lte" />
-        <meta name="twitter:image" content={image} />
+        {image && <meta name="twitter:image" content={image} />}
         <meta
           property="og:title"
           content={APP_NAME}
@@ -71,11 +72,16 @@ export default function PageHead({ props, hideButton }: Props): JSX.Element {
           property="og:description"
           content={description}
         />
-        <meta property="og:image" content={image_og} />
+        {image_og && <meta property="og:image" content={image_og} />}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content={APP_NAME} />
         <meta property="og:locale" content="en_US" />
-        <meta property="og:url" content="https://exchange-secrets.deno.dev/" />
+        {url && (
+          <meta
+            property="og:url"
+            content="https://exchange-secrets.deno.dev/"
+          />
+        )}
       </Head>
       <Header user={props?.data?.user ?? null} hideButton={hideButton} />
     </>

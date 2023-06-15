@@ -1,4 +1,8 @@
-import { getMaxDecryptAttempts, getMaxSecretLength } from "./util.ts";
+import {
+  getLiveURL,
+  getMaxDecryptAttempts,
+  getMaxSecretLength,
+} from "./util.ts";
 
 export const APP_NAME = "Exchange Secrets";
 
@@ -13,3 +17,4 @@ export const KV_SET = {
 
 export const MAX_SECRET_SIZE = getMaxSecretLength();
 export const MAX_DECRYPT_ATTEMPTS = getMaxDecryptAttempts();
+export const LIVE_URL = getLiveURL();

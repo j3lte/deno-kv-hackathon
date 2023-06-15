@@ -34,6 +34,11 @@ export function getMaxSecretLength() {
   return isNaN(parsed) ? defaultLength : parsed;
 }
 
+export function getLiveURL() {
+  const url = Deno.env.get("LIVE_URL") ?? null;
+  return url && (url.endsWith("/") ? url.slice(0, -1) : url);
+}
+
 export function jsonResponse(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
