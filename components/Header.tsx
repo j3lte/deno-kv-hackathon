@@ -1,17 +1,19 @@
 import { User } from "@utils/types.ts";
-import { UserNameHorizontal } from "./User.tsx";
 import { isAdmin } from "@utils/util.ts";
 import { APP_NAME } from "@utils/const.ts";
+
 import BrandGithub from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/brand-github.tsx";
 import LockSquare from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/lock-square.tsx";
-import { ButtonLink } from "./Button.tsx";
 
-const linkClass = "text-sm text-blue-500 hover:underline";
+import { ButtonLink } from "./Button.tsx";
+import ProfilePopOver from "@islands/ProfilePopOver.tsx";
 
 export function Header(props: { user: User | null; hideButton?: boolean }) {
+  const isAdminUser = props.user ? isAdmin(props.user.id) : false;
+
   return (
     <>
-      <div class="flex flex-col sm:flex-row justify-between items-center">
+      <div class="flex flex-row justify-between items-center">
         <a
           href="/"
           class="hover:text-gray-700 flex justify-center items-center gap-1"
@@ -27,23 +29,23 @@ export function Header(props: { user: User | null; hideButton?: boolean }) {
             {props.user
               ? (
                 <>
-                  <a href={`/user`}>
+                  <div
+                    data-popover-target="popover-default"
+                    data-popover-placement="bottom-end"
+                    data-popover-trigger="click"
+                    class="cursor-pointer"
+                  >
                     <img
                       src={props.user.avatarUrl}
                       class="w-10 h-10 rounded-full"
                       alt=""
                     />
-                  </a>
-                  <p class="text-sm text-gray-600">
-                    <UserNameHorizontal user={props.user} />
-                    {isAdmin(props.user?.id || "") && (
-                      <a class="text-red-500" href="/admin">(Admin)</a>
-                    )}
-                  </p>
-
-                  <a class={linkClass} href="/auth/signout">
-                    Log out
-                  </a>
+                  </div>
+                  <ProfilePopOver
+                    name={props.user.name}
+                    login={props.user.login}
+                    admin={isAdminUser}
+                  />
                 </>
               )
               : (
