@@ -24,6 +24,8 @@ export default function PageHead({ props, hideButton }: Props): JSX.Element {
     <>
       <Head>
         <title>{APP_NAME}</title>
+        <link rel="dns-prefetch" href="https://unpkg.com/" />
+        <link rel="dns-preconnect" href="https://unpkg.com/" />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
