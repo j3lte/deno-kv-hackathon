@@ -117,6 +117,7 @@ export default function CreateSecret({ maxSecretLength }: Props): JSX.Element {
           placeholder="Type your secret here..."
           maxLength={maxSecretLength}
           required
+          autoFocus
         />
       </div>
 

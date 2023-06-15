@@ -71,11 +71,18 @@ export default function SecretsList({ secrets, hideOwner }: Props) {
                   {secret.id}
                 </a>
               </p>
-              {!hideOwner && (
+              {!hideOwner && secret.user && (
+                <a
+                  className="text-xs"
+                  href={`https://github.com/${secret.user.login}`}
+                  target="_blank"
+                >
+                  <b>Owner:</b> {secret.user.name} (@{secret.user.login})
+                </a>
+              )}
+              {!hideOwner && !secret.user && (
                 <p className="text-xs">
-                  <b>Owner:</b> {secret.user
-                    ? `${secret.user.name} (@${secret.user.login})`
-                    : "Anonymous"}
+                  <b>Owner:</b> Anonymous
                 </p>
               )}
               <p class="text-xs">
