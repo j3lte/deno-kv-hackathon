@@ -4,13 +4,16 @@
   "deno.unstable": true,
   "deno.config": "./deno.json",
   "editor.detectIndentation": false,
-
+  "editor.suggest.showStatusBar": true,
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "twind.enable": true,
   "[typescript]": {
     "editor.defaultFormatter": "denoland.vscode-deno",
     "editor.formatOnSave": true,
     "editor.tabSize": 2
   },
-
   "[typescriptreact]": {
     "editor.defaultFormatter": "denoland.vscode-deno",
     "editor.formatOnSave": true,

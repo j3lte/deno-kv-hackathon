@@ -1,7 +1,7 @@
 import { User } from "@utils/types.ts";
 import { isAdmin } from "@utils/util.ts";
 import { APP_NAME } from "@utils/const.ts";
-import { BrandGithub, IconLockSquare } from "@utils/icons.ts";
+import { IconBrandGithub, IconLockSquare } from "@utils/icons.ts";
 
 import { ButtonLink } from "./Button.tsx";
 import ProfilePopOver from "@islands/ProfilePopOver.tsx";
@@ -44,7 +44,7 @@ export function Header(props: { user: User | null; hideButton?: boolean }) {
                   >
                     <div>Log in with GitHub</div>
                     <div class={`text-white`}>
-                      <BrandGithub />
+                      <IconBrandGithub />
                     </div>
                   </ButtonLink>
                 </>

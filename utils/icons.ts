@@ -1,4 +1,5 @@
-export { default as BrandGithub } from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/brand-github.tsx";
+export { default as IconBrandDeno } from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/brand-deno.tsx";
+export { default as IconBrandGithub } from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/brand-github.tsx";
 export { default as IconLockSquare } from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/lock-square.tsx";
 export { default as IconClipboard } from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/clipboard.tsx";
 export { default as IconClipboardCheck } from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/clipboard-check.tsx";
