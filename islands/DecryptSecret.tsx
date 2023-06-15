@@ -67,11 +67,13 @@ export default function DecryptSecret(
                 className="px-2 aspect-square"
                 size={16}
                 data={content}
+                aria-label={"Copy secret to clipboard"}
               />
             </div>
             <Textarea
               class="h-32"
               name="secret"
+              id="secret"
               value={content}
               readOnly
               autoGrowHeight

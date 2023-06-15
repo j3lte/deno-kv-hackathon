@@ -62,6 +62,7 @@ export default function CreateSecret({ maxSecretLength }: Props): JSX.Element {
             <Input
               type="text"
               name="secretCreated"
+              id="secretCreated"
               value={secretUrl || ""}
               readOnly
               class="flex-grow border-r-0 outline-none focus:outline-none"
@@ -114,6 +115,7 @@ export default function CreateSecret({ maxSecretLength }: Props): JSX.Element {
         <Textarea
           class="h-32"
           name="secret"
+          id="secret"
           placeholder="Type your secret here..."
           maxLength={maxSecretLength}
           required

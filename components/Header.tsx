@@ -15,6 +15,7 @@ export function Header(props: { user: User | null; hideButton?: boolean }) {
         <a
           href="/"
           class="hover:text-gray-700 flex justify-center items-center gap-1"
+          aria-label="Open homepage"
         >
           <div class="h-8 flex items-center justify-center">
             <IconLockSquare size={32} />

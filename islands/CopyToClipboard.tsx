@@ -28,6 +28,7 @@ export default function CopyToClipboardButton(
         className ?? ""
       }`}
       title={copied ? "Copied!" : "Copy to clipboard"}
+      aria-label={copied ? "Copied!" : "Copy to clipboard"}
     >
       {copied
         ? <IconClipboardCheck size={size} />

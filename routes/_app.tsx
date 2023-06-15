@@ -15,6 +15,7 @@ export default function App({ Component }: AppProps) {
           href="https://github.com/j3lte/deno-kv-hackathon"
           target="_blank"
           class="inline-block text-white hover:text-gray-400"
+          aria-label="Open Github repository for Exchange Secrets"
         >
           <BrandGithub />
         </a>

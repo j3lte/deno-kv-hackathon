@@ -54,6 +54,7 @@ export default function ProfilePopOver(
             <a
               href="/user"
               class="flex flex-row items-center gap-2 hover:text-black"
+              aria-label={`Open profile page`}
             >
               <IconAlignBoxCenterMiddle />
               <span class="text-gray-500">
@@ -64,6 +65,7 @@ export default function ProfilePopOver(
               <a
                 href="/admin"
                 class="flex flex-row items-center gap-2 hover:text-black"
+                aria-label={`Open admin page`}
               >
                 <IconAbacus />
                 <span class="text-gray-500">Admin</span>
@@ -72,6 +74,7 @@ export default function ProfilePopOver(
             <a
               href="/auth/signout"
               class="flex flex-row items-center gap-2 hover:text-black"
+              aria-label={`Sign out`}
             >
               <IconLogout />
               <span class="text-gray-500">Sign out</span>

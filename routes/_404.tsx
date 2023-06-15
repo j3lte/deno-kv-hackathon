@@ -28,7 +28,7 @@ export default function NotFoundPage({ url }: UnknownPageProps) {
               </div>
             )
             : <p class="text-sm">Requested URL: {url.pathname}</p>}
-          <ButtonLink href="/" class="mt-4">
+          <ButtonLink href="/" class="mt-4" aria-label={"Go back home"}>
             Go Home
           </ButtonLink>
         </div>
