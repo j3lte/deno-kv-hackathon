@@ -1,4 +1,4 @@
-import { decode as hd, encode as he } from "$std/encoding/hex.ts";
+import { decode as hexDecode, encode as hexEncode } from "$std/encoding/hex.ts";
 
 const encodeText = (s: string) => new TextEncoder().encode(s);
 const decodeText = (d: Uint8Array) => new TextDecoder().decode(d);
@@ -37,8 +37,8 @@ export const encrypt = async (data: string, cipherKey: string) => {
     encoded,
   );
   const cipherBytes = new Uint8Array(cipher);
-  const hexBytes = decodeText(he(cipherBytes));
-  const hexIV = decodeText(he(iv));
+  const hexBytes = decodeText(hexEncode(cipherBytes));
+  const hexIV = decodeText(hexEncode(iv));
   return {
     cipherText: hexBytes,
     iv: hexIV,
@@ -52,14 +52,14 @@ export const decrypt = async (
 ): Promise<string | null> => {
   try {
     const key = await generateKey(cipherKey);
-    const iv = hd(encodeText(hexIv));
+    const iv = hexDecode(encodeText(hexIv));
     const decrypted = await crypto.subtle.decrypt(
       {
         name: "AES-GCM",
         iv,
       },
       key,
-      hd(encodeText(cipherText)),
+      hexDecode(encodeText(cipherText)),
     );
     const decryptedBytes = new Uint8Array(decrypted);
     const decryptedText = decodeText(decryptedBytes);
