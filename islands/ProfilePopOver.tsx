@@ -1,4 +1,6 @@
 import { JSX } from "preact";
+import { IS_BROWSER } from "$fresh/runtime.ts";
+
 import { UserNameHorizontal } from "@components/User.tsx";
 import { User } from "@utils/types.ts";
 
@@ -9,14 +11,31 @@ import IconAbacus from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/abacus.ts
 export interface Props {
   name: string;
   login: string;
+  avatarUrl: string;
   admin: boolean;
 }
 
 export default function ProfilePopOver(
-  { name, login, admin }: Props,
+  { name, login, admin, avatarUrl }: Props,
 ): JSX.Element {
+  const isHoverableDevice = IS_BROWSER && window.matchMedia(
+    "(hover: hover) and (pointer: fine)",
+  ).matches;
+
   return (
     <>
+      <div
+        data-popover-target="popover-default"
+        data-popover-placement="bottom-end"
+        data-popover-trigger={isHoverableDevice ? "hover" : "click"}
+        class="cursor-pointer"
+      >
+        <img
+          src={avatarUrl}
+          class="w-10 h-10 rounded-full"
+          alt=""
+        />
+      </div>
       <div
         data-popover
         id="popover-default"

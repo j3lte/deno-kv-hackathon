@@ -29,21 +29,10 @@ export function Header(props: { user: User | null; hideButton?: boolean }) {
             {props.user
               ? (
                 <>
-                  <div
-                    data-popover-target="popover-default"
-                    data-popover-placement="bottom-end"
-                    data-popover-trigger="click"
-                    class="cursor-pointer"
-                  >
-                    <img
-                      src={props.user.avatarUrl}
-                      class="w-10 h-10 rounded-full"
-                      alt=""
-                    />
-                  </div>
                   <ProfilePopOver
                     name={props.user.name}
                     login={props.user.login}
+                    avatarUrl={props.user.avatarUrl}
                     admin={isAdminUser}
                   />
                 </>
