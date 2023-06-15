@@ -1,9 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import {
-  addSecret,
-  getUserBySession,
-  updateSecretAttempts,
-} from "@utils/db.ts";
+import { getUserBySession, updateSecretAttempts } from "@utils/db.ts";
 import { SessionState, User } from "@utils/types.ts";
 import { getSecretFromContext, isAdmin, jsonResponse } from "@utils/util.ts";
 import { decrypt } from "@utils/crypto.ts";

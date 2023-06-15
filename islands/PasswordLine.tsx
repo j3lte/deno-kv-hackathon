@@ -1,8 +1,7 @@
 import { JSX } from "preact";
 import { useState } from "preact/hooks";
 
-import IconEye from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/eye.tsx";
-import IconEyeOff from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/eye-off.tsx";
+import { IconEye, IconEyeOff } from "@utils/icons.ts";
 
 import { Input } from "@components/Input.tsx";
 

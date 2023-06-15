@@ -1,12 +1,14 @@
 import { JSX } from "preact";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 
-import { UserNameHorizontal } from "@components/User.tsx";
 import { User } from "@utils/types.ts";
+import {
+  IconAbacus,
+  IconAlignBoxCenterMiddle,
+  IconLogout,
+} from "@utils/icons.ts";
 
-import IconLogout from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/logout.tsx";
-import IconAlignBoxCenterMiddle from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/align-box-center-middle.tsx";
-import IconAbacus from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/abacus.tsx";
+import { UserNameHorizontal } from "@components/User.tsx";
 
 export interface Props {
   name: string;

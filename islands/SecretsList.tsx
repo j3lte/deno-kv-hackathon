@@ -1,8 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 
 import { SecretWithUser } from "@utils/types.ts";
-import IconTrash from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/trash.tsx";
-import IconAtOff from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/at-off.tsx";
+import { IconAtOff, IconTrash } from "@utils/icons.ts";
 
 export interface Props {
   secrets: SecretWithUser[];

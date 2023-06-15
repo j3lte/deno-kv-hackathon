@@ -1,12 +1,11 @@
 import { JSX } from "preact";
 import { useState } from "preact/hooks";
 
+import { IconArrowBadgeLeft, IconArrowBadgeRight } from "@utils/icons.ts";
+
 import PasswordLine from "./PasswordLine.tsx";
 import Textarea from "./TextArea.tsx";
 import CopyToClipboardButton from "./CopyToClipboard.tsx";
-
-import IconArrowBadgeRight from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/arrow-badge-right.tsx";
-import IconArrowBadgeLeft from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/arrow-badge-left.tsx";
 
 interface Props {
   attempts: number | null;

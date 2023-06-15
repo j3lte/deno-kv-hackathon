@@ -1,8 +1,8 @@
 import { JSX } from "preact";
 import { useState } from "preact/hooks";
 
-import IconClipboard from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/clipboard.tsx";
-import IconClipboardCheck from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/clipboard-check.tsx";
+import { IconClipboard, IconClipboardCheck } from "@utils/icons.ts";
+
 import { Button } from "@components/Button.tsx";
 
 interface Props extends JSX.HTMLAttributes<HTMLButtonElement> {

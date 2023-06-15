@@ -1,9 +1,7 @@
 import { User } from "@utils/types.ts";
 import { isAdmin } from "@utils/util.ts";
 import { APP_NAME } from "@utils/const.ts";
-
-import BrandGithub from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/brand-github.tsx";
-import LockSquare from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/lock-square.tsx";
+import { BrandGithub, IconLockSquare } from "@utils/icons.ts";
 
 import { ButtonLink } from "./Button.tsx";
 import ProfilePopOver from "@islands/ProfilePopOver.tsx";
@@ -19,7 +17,7 @@ export function Header(props: { user: User | null; hideButton?: boolean }) {
           class="hover:text-gray-700 flex justify-center items-center gap-1"
         >
           <div class="h-8 flex items-center justify-center">
-            <LockSquare size={32} />
+            <IconLockSquare size={32} />
           </div>
           <h1 class="text-3xl font-bold">{APP_NAME}</h1>
         </a>

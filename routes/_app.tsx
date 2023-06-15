@@ -1,5 +1,5 @@
 import { AppProps } from "$fresh/server.ts";
-import BrandGithub from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/brand-github.tsx";
+import { BrandGithub } from "@utils/icons.ts";
 
 export default function App({ Component }: AppProps) {
   return (
