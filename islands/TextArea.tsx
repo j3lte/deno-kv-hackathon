@@ -1,13 +1,18 @@
 import { JSX } from "preact";
-import { useMemo, useState } from "preact/hooks";
+import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 
 const inputClasses =
   "w-full px-3 py-2 bg-white rounded border(gray-500 2) disabled:(opacity-50 cursor-not-allowed)";
 
+interface ITextareaProps extends JSX.HTMLAttributes<HTMLTextAreaElement> {
+  autoGrowHeight?: boolean;
+}
+
 export default function Textarea(
-  props: JSX.HTMLAttributes<HTMLTextAreaElement>,
+  props: ITextareaProps,
 ) {
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const maxLength = props.maxLength ? Number(props.maxLength) : null;
   const [size, setSize] = useState(0);
 
@@ -22,6 +27,17 @@ export default function Textarea(
     setSize(val.length);
   };
 
+  useEffect(() => {
+    if (IS_BROWSER && textAreaRef && props.autoGrowHeight) {
+      const el = textAreaRef.current;
+      if (!el) return;
+
+      el.style.height = "0px";
+      const scrollHeight = el.scrollHeight + 10;
+      el.style.height = (scrollHeight > 128 ? scrollHeight : 128) + "px";
+    }
+  }, [props.autoGrowHeight, props.value, props.autoGrowHeight]);
+
   const areaSizeStr = useMemo(() => {
     if (!IS_BROWSER || maxLength === null) return "";
     return `${size}/${maxLength}`;
@@ -31,6 +47,7 @@ export default function Textarea(
     <div class="flex w-full relative">
       <textarea
         {...props}
+        ref={textAreaRef}
         onChange={onChangeArea}
         onKeyUp={onChangeArea}
         disabled={!IS_BROWSER || props.disabled}

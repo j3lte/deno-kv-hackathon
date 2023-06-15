@@ -5,6 +5,9 @@ import PasswordLine from "./PasswordLine.tsx";
 import Textarea from "./TextArea.tsx";
 import CopyToClipboardButton from "./CopyToClipboard.tsx";
 
+import IconArrowBadgeRight from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/arrow-badge-right.tsx";
+import IconArrowBadgeLeft from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/arrow-badge-left.tsx";
+
 interface Props {
   attempts: number | null;
   id: string;
@@ -72,11 +75,14 @@ export default function DecryptSecret(
               name="secret"
               value={content}
               readOnly
+              autoGrowHeight
             />
           </div>
-          <span class="text-xs text-center">
-            Note: after viewing this secret, it is deleted!
-          </span>
+          <div class="text-xs text-gray-500 flex items-center justify-center">
+            <IconArrowBadgeRight />
+            <span>Note: after viewing this secret, it is deleted!</span>
+            <IconArrowBadgeLeft />
+          </div>
         </div>
       )}
 
