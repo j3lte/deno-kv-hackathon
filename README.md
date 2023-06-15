@@ -6,7 +6,7 @@
 
 ## Description
 
-> This project was created for the [Deno Deploy Hackathon](https://deno.com/blog/deno-kv-hackathon) that ran between June 12 and June 15th 2023.
+> This project was created for the [Deno KV Hackathon](https://deno.com/blog/deno-kv-hackathon) that ran between June 12 and June 15th 2023.
 
 - Share secrets with anyone, using a simple textbox and a password.
 - Secrets stored as encrypted data, so they are safe from prying eyes.
