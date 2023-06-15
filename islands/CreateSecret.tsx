@@ -1,17 +1,107 @@
-import { useState } from "preact/hooks";
+import { useMemo, useState } from "preact/hooks";
 import { Input, Textarea } from "@components/Input.tsx";
+import { IS_BROWSER } from "$fresh/runtime.ts";
 
 import IconEye from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/eye.tsx";
 import IconEyeOff from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/eye-off.tsx";
+import CopyToClipboardButton from "./CopyToClipboard.tsx";
+import PasswordLine from "./PasswordLine.tsx";
 
 export default function CreateSecret() {
   const [showPassword, setShowPassword] = useState(false);
+  const [createdSecretID, setCreatedSecretID] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const reset = () => {
+    setCreatedSecretID(null);
+    setError(null);
+  };
+
+  const secretUrl = useMemo(() => {
+    if (!IS_BROWSER || !createdSecretID || !window.location) return null;
+    return `${window.location.origin}/secret/${createdSecretID}`;
+  }, [createdSecretID, window.location]);
+
+  const handleSubmit = (e: Event) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    if (!formData.get("secret")) return;
+
+    fetch("/api/secret", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          setCreatedSecretID(null);
+          setError(data.error);
+        } else {
+          setCreatedSecretID(data.id);
+          setError(null);
+          form.reset();
+        }
+      });
+  };
+
+  if (createdSecretID) {
+    return (
+      <div class="flex flex-col">
+        <div class="flex flex-col">
+          <label for="secretCreated" class="text-sm font-semibold">
+            Secret Created!
+          </label>
+
+          <div class="flex flex-row my-8">
+            <Input
+              type="text"
+              name="secretCreated"
+              value={secretUrl || ""}
+              readOnly
+              class="flex-grow border-r-0 outline-none focus:outline-none"
+              style="border-top-right-radius: 0px; border-bottom-right-radius: 0px;"
+            />
+            <CopyToClipboardButton
+              data={secretUrl || ""}
+              class={`px-4 py-2 text-sm font-semibold text-white border(gray-500 2) rounded border-l-0 outline-none focus:outline-none`}
+              style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;"
+            />
+          </div>
+        </div>
+        <div class="flex flex-col space-y-2">
+          <button
+            type="button"
+            onClick={reset}
+            class="px-4 py-2 text-sm font-semibold text-white bg-blue-500 rounded"
+          >
+            Create another
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div class="flex flex-col space-y-4">
+        <div class="flex flex-col space-y-2">
+          <label for="secret" class="text-sm font-semibold">
+            Error
+          </label>
+          <div class="px-4 py-2 text-sm font-semibold text-white bg-red-500 rounded">
+            {error}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form
       class="flex flex-col space-y-4"
-      method="POST"
-      action="/api/secret"
+      onSubmit={handleSubmit}
     >
       <div class="flex flex-col space-y-2">
         <label for="secret" class="text-sm font-semibold">
@@ -25,27 +115,7 @@ export default function CreateSecret() {
         />
       </div>
 
-      <div class="flex flex-col space-y-2">
-        <label for="password" class="text-sm font-semibold">
-          Password
-        </label>
-        <div className="w-full flex flex-row">
-          <Input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            class="flex-1 border-r-0 outline-none focus:outline-none"
-            style="border-top-right-radius: 0px; border-bottom-right-radius: 0px;"
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword((pw) => !pw)}
-            class={`px-4 py-2 text-sm font-semibold text-white border(gray-500 2) rounded border-l-0 bg-blue-500 outline-none focus:outline-none`}
-            style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;"
-          >
-            {showPassword ? <IconEyeOff /> : <IconEye />}
-          </button>
-        </div>
-      </div>
+      <PasswordLine />
 
       <div class="flex flex-col space-y-2">
         <button

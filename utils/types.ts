@@ -14,10 +14,15 @@ export interface SecretData {
   iv: string;
   encrypted: boolean;
   burnAfterReading: boolean;
-  expiresAt: string | null;
+  decryptAttempts: number;
 }
 
 export interface Secret extends SecretData {
   id: string;
   uid: string | null;
+  createdAt: string;
+}
+
+export interface SecretWithUser extends Secret {
+  user: User | null;
 }

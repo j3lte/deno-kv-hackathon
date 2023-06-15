@@ -1,7 +1,9 @@
-import { Secret, SecretData, User } from "./types.ts";
+import "$std/dotenv/load.ts";
+
+import { Secret, SecretData, SecretWithUser, User } from "./types.ts";
 import { KV_SET } from "./const.ts";
 
-const kv = await Deno.openKv();
+const kv = await Deno.openKv(Deno.env.get("KV_SECRET_STORE")!);
 
 export async function setUserWithSession(user: User, session: string) {
   await kv
@@ -32,19 +34,27 @@ export async function deleteSession(session: string) {
   await kv.delete([KV_SET.USERS_BY_SESSION, session]);
 }
 
+async function getUniqueId(): Promise<string> {
+  const uuid = crypto.randomUUID();
+  const existingSecret = await kv.get<Secret>([KV_SET.SECRETS, uuid]);
+  if (existingSecret.value) {
+    return await getUniqueId();
+  }
+  return uuid;
+}
+
 export async function addSecret(
   data: SecretData,
-  encryptionKey: string | null,
   uid: string | null,
 ) {
-  const uuid = crypto.randomUUID();
-  const id = new Date().getTime() + "-" + uuid;
+  const id = await getUniqueId();
   const user = uid ? await getUserById(uid) : null;
 
   const secret: Secret = {
     ...data,
     id,
     uid: user?.id || null,
+    createdAt: new Date().toISOString(),
   };
 
   await kv.set([KV_SET.SECRETS, id], secret);
@@ -52,7 +62,7 @@ export async function addSecret(
     await kv.set([KV_SET.SECRETS_BY_USER, user.id, id], secret);
   }
 
-  return true;
+  return id;
 }
 
 export async function getSecret(id: string): Promise<Secret | null> {
@@ -72,6 +82,22 @@ export async function getSecretsByUser(uid: string): Promise<Secret[]> {
   return secrets;
 }
 
+export async function listSecrets(): Promise<SecretWithUser[]> {
+  const iter = await kv.list<Secret>(
+    { prefix: [KV_SET.SECRETS] },
+    { reverse: true },
+  );
+  const secrets: SecretWithUser[] = [];
+  for await (const item of iter) {
+    const user = item.value.uid ? await getUserById(item.value.uid) : null;
+    secrets.push({
+      ...item.value,
+      user,
+    });
+  }
+  return secrets;
+}
+
 export async function deleteSecret(id: string) {
   const secret = await getSecret(id);
   if (!secret) return;
@@ -80,4 +106,14 @@ export async function deleteSecret(id: string) {
   if (secret.uid) {
     await kv.delete([KV_SET.SECRETS_BY_USER, secret.uid, id]);
   }
+}
+
+export async function updateSecretAttempts(id: string, attempts: number) {
+  const secret = await getSecret(id);
+  if (!secret) return;
+
+  await kv.set([KV_SET.SECRETS, id], {
+    ...secret,
+    decryptAttempts: attempts,
+  });
 }

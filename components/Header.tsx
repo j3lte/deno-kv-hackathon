@@ -8,7 +8,7 @@ import { ButtonLink } from "./Button.tsx";
 
 const linkClass = "text-sm text-blue-500 hover:underline";
 
-export function Header(props: { user: User | null; hideNew?: boolean }) {
+export function Header(props: { user: User | null; hideButton?: boolean }) {
   return (
     <>
       <div class="flex flex-col sm:flex-row justify-between items-center">
@@ -22,43 +22,45 @@ export function Header(props: { user: User | null; hideNew?: boolean }) {
           <h1 class="text-3xl font-bold">{APP_NAME}</h1>
         </a>
 
-        <div class="flex items-center gap-4">
-          {props.user
-            ? (
-              <>
-                <a href={`/user/${props.user.id}`}>
-                  <img
-                    src={props.user.avatarUrl}
-                    class="w-10 h-10 rounded-full"
-                    alt=""
-                  />
-                </a>
-                <p class="text-sm text-gray-600">
-                  <UserNameHorizontal user={props.user} />
-                  {isAdmin(props.user?.id || "") && (
-                    <span class="text-red-500">(Admin)</span>
-                  )}
-                </p>
+        {!props.hideButton && (
+          <div class="flex items-center gap-4">
+            {props.user
+              ? (
+                <>
+                  <a href={`/user`}>
+                    <img
+                      src={props.user.avatarUrl}
+                      class="w-10 h-10 rounded-full"
+                      alt=""
+                    />
+                  </a>
+                  <p class="text-sm text-gray-600">
+                    <UserNameHorizontal user={props.user} />
+                    {isAdmin(props.user?.id || "") && (
+                      <a class="text-red-500" href="/admin">(Admin)</a>
+                    )}
+                  </p>
 
-                <a class={linkClass} href="/auth/signout">
-                  Log out
-                </a>
-              </>
-            )
-            : (
-              <>
-                <ButtonLink
-                  href="/auth/signin"
-                  class="hover:bg-blue-600 text-xs flex justify-center items-center gap-1"
-                >
-                  <div>Log in with GitHub</div>
-                  <div class={`text-white`}>
-                    <BrandGithub />
-                  </div>
-                </ButtonLink>
-              </>
-            )}
-        </div>
+                  <a class={linkClass} href="/auth/signout">
+                    Log out
+                  </a>
+                </>
+              )
+              : (
+                <>
+                  <ButtonLink
+                    href="/auth/signin"
+                    class="hover:bg-blue-600 text-xs flex justify-center items-center gap-1"
+                  >
+                    <div>Log in with GitHub</div>
+                    <div class={`text-white`}>
+                      <BrandGithub />
+                    </div>
+                  </ButtonLink>
+                </>
+              )}
+          </div>
+        )}
       </div>
     </>
   );

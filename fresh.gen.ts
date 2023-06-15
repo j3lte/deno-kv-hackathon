@@ -3,27 +3,41 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import config from "./deno.json" assert { type: "json" };
-import * as $0 from "./routes/_app.tsx";
-import * as $1 from "./routes/_middleware.tsx";
-import * as $2 from "./routes/api/secret/index.tsx";
-import * as $3 from "./routes/auth/callback.ts";
-import * as $4 from "./routes/auth/signin.ts";
-import * as $5 from "./routes/auth/signout.ts";
-import * as $6 from "./routes/index.tsx";
-import * as $$0 from "./islands/CreateSecret.tsx";
+import * as $0 from "./routes/_404.tsx";
+import * as $1 from "./routes/_app.tsx";
+import * as $2 from "./routes/_middleware.tsx";
+import * as $3 from "./routes/admin.tsx";
+import * as $4 from "./routes/api/decrypt/[id]/index.tsx";
+import * as $5 from "./routes/api/secret/index.tsx";
+import * as $6 from "./routes/auth/callback.ts";
+import * as $7 from "./routes/auth/signin.ts";
+import * as $8 from "./routes/auth/signout.ts";
+import * as $9 from "./routes/index.tsx";
+import * as $10 from "./routes/secret/[id]/index.tsx";
+import * as $$0 from "./islands/CopyToClipboard.tsx";
+import * as $$1 from "./islands/CreateSecret.tsx";
+import * as $$2 from "./islands/DecryptSecret.tsx";
+import * as $$3 from "./islands/PasswordLine.tsx";
 
 const manifest = {
   routes: {
-    "./routes/_app.tsx": $0,
-    "./routes/_middleware.tsx": $1,
-    "./routes/api/secret/index.tsx": $2,
-    "./routes/auth/callback.ts": $3,
-    "./routes/auth/signin.ts": $4,
-    "./routes/auth/signout.ts": $5,
-    "./routes/index.tsx": $6,
+    "./routes/_404.tsx": $0,
+    "./routes/_app.tsx": $1,
+    "./routes/_middleware.tsx": $2,
+    "./routes/admin.tsx": $3,
+    "./routes/api/decrypt/[id]/index.tsx": $4,
+    "./routes/api/secret/index.tsx": $5,
+    "./routes/auth/callback.ts": $6,
+    "./routes/auth/signin.ts": $7,
+    "./routes/auth/signout.ts": $8,
+    "./routes/index.tsx": $9,
+    "./routes/secret/[id]/index.tsx": $10,
   },
   islands: {
-    "./islands/CreateSecret.tsx": $$0,
+    "./islands/CopyToClipboard.tsx": $$0,
+    "./islands/CreateSecret.tsx": $$1,
+    "./islands/DecryptSecret.tsx": $$2,
+    "./islands/PasswordLine.tsx": $$3,
   },
   baseUrl: import.meta.url,
   config,
