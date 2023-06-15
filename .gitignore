@@ -5,3 +5,4 @@
 .env.production.local
 .env.local
 kv.db*
+.DS_Store
