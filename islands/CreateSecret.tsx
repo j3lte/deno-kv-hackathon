@@ -1,14 +1,18 @@
+import { JSX } from "preact";
 import { useMemo, useState } from "preact/hooks";
-import { Input, Textarea } from "@components/Input.tsx";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 
-import IconEye from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/eye.tsx";
-import IconEyeOff from "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/eye-off.tsx";
+import { Input } from "@components/Input.tsx";
+import Textarea from "@islands/TextArea.tsx";
+
 import CopyToClipboardButton from "./CopyToClipboard.tsx";
 import PasswordLine from "./PasswordLine.tsx";
 
-export default function CreateSecret() {
-  const [showPassword, setShowPassword] = useState(false);
+export interface Props {
+  maxSecretLength: number;
+}
+
+export default function CreateSecret({ maxSecretLength }: Props): JSX.Element {
   const [createdSecretID, setCreatedSecretID] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -111,16 +115,17 @@ export default function CreateSecret() {
           class="h-32"
           name="secret"
           placeholder="Type your secret here..."
+          maxLength={maxSecretLength}
           required
         />
       </div>
 
       <PasswordLine />
 
-      <div class="flex flex-col space-y-2">
+      <div class="flex flex-col">
         <button
           type="submit"
-          class="px-4 py-2 text-sm font-semibold text-white bg-blue-500 rounded"
+          class="px-4 py-2 text-sm font-semibold text-white bg-blue-500 rounded mt-4"
         >
           Create
         </button>

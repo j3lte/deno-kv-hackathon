@@ -2,7 +2,7 @@ import { JSX } from "preact";
 import { useState } from "preact/hooks";
 
 import PasswordLine from "./PasswordLine.tsx";
-import { Textarea } from "@components/Input.tsx";
+import Textarea from "./TextArea.tsx";
 import CopyToClipboardButton from "./CopyToClipboard.tsx";
 
 interface Props {
@@ -23,7 +23,7 @@ export default function DecryptSecret(
 
     if (!formData.get("secretPW")) return;
 
-    fetch(`/api/decrypt/${id}`, {
+    fetch(`/api/secret/${id}`, {
       method: "POST",
       body: formData,
     })

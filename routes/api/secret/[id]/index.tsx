@@ -5,7 +5,7 @@ import {
   updateSecretAttempts,
 } from "@utils/db.ts";
 import { SessionState, User } from "@utils/types.ts";
-import { getSecretFromContext, jsonResponse } from "@utils/util.ts";
+import { getSecretFromContext, isAdmin, jsonResponse } from "@utils/util.ts";
 import { decrypt } from "@utils/crypto.ts";
 import { deleteSecret } from "@utils/db.ts";
 
@@ -52,5 +52,39 @@ export const handler: Handlers<Data, SessionState> = {
         error: "Failed to decrypt",
       });
     }
+  },
+  async DELETE(_req, ctx) {
+    const user = await getUserBySession(ctx.state.session ?? "");
+    const secret = await getSecretFromContext(ctx);
+
+    if (!secret) {
+      return jsonResponse({
+        error: "Unknown secret",
+      });
+    }
+
+    if (!user) {
+      return jsonResponse({
+        error: "Unknown user",
+      });
+    }
+
+    if (isAdmin(user.id)) {
+      await deleteSecret(secret.id);
+      return jsonResponse({
+        deleted: true,
+      });
+    }
+
+    if (user.id !== secret.uid) {
+      return jsonResponse({
+        error: "Unauthorized",
+      });
+    }
+
+    await deleteSecret(secret.id);
+    return jsonResponse({
+      deleted: true,
+    });
   },
 };

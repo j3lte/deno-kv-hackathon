@@ -1,3 +1,5 @@
+import { getMaxDecryptAttempts, getMaxSecretLength } from "./util.ts";
+
 export const APP_NAME = "Exchange Secrets";
 
 export const KV_SET = {
@@ -8,3 +10,6 @@ export const KV_SET = {
   SECRETS: "secrets",
   SECRETS_BY_USER: "secrets_by_user",
 };
+
+export const MAX_SECRET_SIZE = getMaxSecretLength();
+export const MAX_DECRYPT_ATTEMPTS = getMaxDecryptAttempts();

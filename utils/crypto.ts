@@ -63,6 +63,7 @@ export const decrypt = async (
     const decryptedBytes = new Uint8Array(decrypted);
     const decryptedText = decodeText(decryptedBytes);
     return decryptedText;
+    // deno-lint-ignore no-empty
   } catch (_error) {}
   return null;
 };

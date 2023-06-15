@@ -70,18 +70,6 @@ export async function getSecret(id: string): Promise<Secret | null> {
   return res.value || null;
 }
 
-export async function getSecretsByUser(uid: string): Promise<Secret[]> {
-  const iter = await kv.list<Secret>(
-    { prefix: [KV_SET.SECRETS_BY_USER, uid] },
-    { reverse: true },
-  );
-  const secrets: Secret[] = [];
-  for await (const item of iter) {
-    secrets.push(item.value);
-  }
-  return secrets;
-}
-
 export async function listSecrets(): Promise<SecretWithUser[]> {
   const iter = await kv.list<Secret>(
     { prefix: [KV_SET.SECRETS] },
@@ -90,6 +78,24 @@ export async function listSecrets(): Promise<SecretWithUser[]> {
   const secrets: SecretWithUser[] = [];
   for await (const item of iter) {
     const user = item.value.uid ? await getUserById(item.value.uid) : null;
+    secrets.push({
+      ...item.value,
+      user,
+    });
+  }
+  return secrets;
+}
+
+export async function listSecretsByUser(
+  uid: string,
+): Promise<SecretWithUser[]> {
+  const user = await getUserById(uid);
+  const iter = await kv.list<Secret>(
+    { prefix: [KV_SET.SECRETS_BY_USER, uid] },
+    { reverse: true },
+  );
+  const secrets: SecretWithUser[] = [];
+  for await (const item of iter) {
     secrets.push({
       ...item.value,
       user,

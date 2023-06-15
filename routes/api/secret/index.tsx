@@ -1,32 +1,14 @@
 import { Handlers } from "$fresh/server.ts";
 import { addSecret, getUserBySession } from "@utils/db.ts";
 import { SessionState, User } from "@utils/types.ts";
+import { MAX_DECRYPT_ATTEMPTS } from "@utils/const.ts";
 import { jsonResponse } from "@utils/util.ts";
 import { encrypt } from "@utils/crypto.ts";
+import { MAX_SECRET_SIZE } from "@utils/const.ts";
 
 interface Data {
   user: User | null;
 }
-
-const encryptDataIfNeeded = async (
-  data: string,
-  password: string | null,
-): Promise<{ iv: string; content: string; encrypted: boolean }> => {
-  if (!password) {
-    return {
-      iv: "",
-      content: data,
-      encrypted: false,
-    };
-  }
-
-  const encrypted = await encrypt(data, password);
-  return {
-    iv: encrypted.iv,
-    content: encrypted.cipherText,
-    encrypted: true,
-  };
-};
 
 export const handler: Handlers<Data, SessionState> = {
   async POST(req, ctx) {
@@ -47,17 +29,21 @@ export const handler: Handlers<Data, SessionState> = {
       });
     }
 
+    if (secret.length > MAX_SECRET_SIZE) {
+      return jsonResponse({
+        error: `Secret cannot be longer than ${MAX_SECRET_SIZE} characters`,
+      });
+    }
+
     try {
-      const { iv, content, encrypted } = await encryptDataIfNeeded(
+      const { iv, cipherText } = await encrypt(
         secret,
         password,
       );
       const id = await addSecret({
-        content,
+        content: cipherText,
         iv,
-        encrypted,
-        burnAfterReading: true,
-        decryptAttempts: 3,
+        decryptAttempts: MAX_DECRYPT_ATTEMPTS,
       }, user?.id ?? "");
 
       return jsonResponse({

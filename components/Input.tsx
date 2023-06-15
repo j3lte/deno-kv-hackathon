@@ -13,13 +13,3 @@ export function Input(props: JSX.HTMLAttributes<HTMLInputElement>) {
     />
   );
 }
-
-export function Textarea(props: JSX.HTMLAttributes<HTMLTextAreaElement>) {
-  return (
-    <textarea
-      {...props}
-      disabled={!IS_BROWSER || props.disabled}
-      class={`${inputClasses} ${props.class ?? ""}`}
-    />
-  );
-}

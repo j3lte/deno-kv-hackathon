@@ -2,6 +2,7 @@ import { HandlerContext, PageProps } from "$fresh/server.ts";
 
 import { SessionState, User } from "@utils/types.ts";
 import { getUserBySession } from "@utils/db.ts";
+import { MAX_SECRET_SIZE } from "@utils/const.ts";
 
 import CreateSecret from "@islands/CreateSecret.tsx";
 import PageHead from "@components/PageHead.tsx";
@@ -26,7 +27,7 @@ export default function Home(props: PageProps<Data>) {
     <>
       <PageHead props={props} />
       <div class="p-4 mx-auto max-w-screen-md">
-        <CreateSecret />
+        <CreateSecret maxSecretLength={MAX_SECRET_SIZE} />
       </div>
     </>
   );

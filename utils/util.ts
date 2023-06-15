@@ -16,6 +16,24 @@ export function isAdmin(userId: string) {
   return adminIds.includes(userId);
 }
 
+export function getMaxDecryptAttempts() {
+  const defaultAttempts = 3;
+  const parsed = parseInt(
+    Deno.env.get("MAX_DECRYPT_ATTEMPTS") ?? `${defaultAttempts}`,
+    10,
+  );
+  return isNaN(parsed) ? defaultAttempts : parsed;
+}
+
+export function getMaxSecretLength() {
+  const defaultLength = 1024;
+  const parsed = parseInt(
+    Deno.env.get("MAX_SECRET_LENGTH") ?? `${defaultLength}`,
+    10,
+  );
+  return isNaN(parsed) ? defaultLength : parsed;
+}
+
 export function jsonResponse(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), {
     status,

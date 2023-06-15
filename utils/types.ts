@@ -12,8 +12,6 @@ export interface User {
 export interface SecretData {
   content: string;
   iv: string;
-  encrypted: boolean;
-  burnAfterReading: boolean;
   decryptAttempts: number;
 }
 
