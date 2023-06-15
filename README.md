@@ -27,8 +27,7 @@ This will watch the project directory and restart as necessary.
 ## Technical Details
 
 - It stores data using [Deno KV](https://deno.com/kv)
-- All data is encrypted using AES-CBC and stored in the KV store (Cipher text && IV). Decryption is done on the server-side, so we can monitor the number of decryption attempts and delete the secret if it is being brute forced.
-  - > Note: I am aware that AES-CBC is not the most secure. I used this method because I could find good working examples. For a production version I would probably use AES-GCM.
+- All data is encrypted using AES-GCM and stored in the KV store (Cipher text && IV). Decryption is done on the server-side, so we can monitor the number of decryption attempts and delete the secret if it is being brute forced.
 - It uses the excellent [Deno KV Oauth](https://deno.land/x/deno_kv_oauth@v0.2.0-beta) library to authenticate. It this demo I am only implementing Github authentication, but for a future version I might add others.
 - The project structure was inspired by the [hashrock/kv-sketchbook](https://github.com/hashrock/kv-sketchbook) repository. I used some concepts regarding authentication and sessionData, ended up rewriting most of it.
 - The UI is mostly just [Fresh](https://fresh.deno.dev/) and Tailwind CSS. For the profile popover I decided to use the [Flowbite plugin](https://deno.land/x/fresh_flowbite@1.0.0-1.6.3/) to make my life a little easier.

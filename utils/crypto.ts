@@ -4,6 +4,7 @@ const encodeText = (s: string) => new TextEncoder().encode(s);
 const decodeText = (d: Uint8Array) => new TextDecoder().decode(d);
 
 const generateIV = () => crypto.getRandomValues(new Uint8Array(16));
+
 const sha256 = async (data: string) => {
   const encoded = encodeText(data);
   const hash = await crypto.subtle.digest("SHA-256", encoded);
@@ -16,7 +17,7 @@ const generateKey = async (cipherKey: string) => {
   const key = await crypto.subtle.importKey(
     "raw",
     rawKey.buffer,
-    "AES-CBC",
+    "AES-GCM",
     true,
     ["encrypt", "decrypt"],
   );
@@ -29,7 +30,7 @@ export const encrypt = async (data: string, cipherKey: string) => {
   const key = await generateKey(cipherKey);
   const cipher = await crypto.subtle.encrypt(
     {
-      name: "AES-CBC",
+      name: "AES-GCM",
       iv,
     },
     key,
@@ -54,7 +55,7 @@ export const decrypt = async (
     const iv = hd(encodeText(hexIv));
     const decrypted = await crypto.subtle.decrypt(
       {
-        name: "AES-CBC",
+        name: "AES-GCM",
         iv,
       },
       key,
