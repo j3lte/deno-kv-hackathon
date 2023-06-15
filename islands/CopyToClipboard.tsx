@@ -24,7 +24,7 @@ export default function CopyToClipboardButton(
         setCopied(true);
         navigator.clipboard.writeText(data);
       }}
-      class={`focus:outline-none ${copied ? "bg-green-500" : "bg-blue-500"} ${
+      class={`focus:outline-none ${copied ? "bg-green-500" : "bg-gray-700"} ${
         className ?? ""
       }`}
       title={copied ? "Copied!" : "Copy to clipboard"}

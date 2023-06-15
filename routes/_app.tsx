@@ -7,7 +7,7 @@ export default function App({ Component }: AppProps) {
       <div class="px-4 pt-4 md:pt-8 pb-3 mx-auto w-full max-w-screen-md flex-1">
         <Component />
       </div>
-      <div class="bg-gray-800 py-4 text-white text-center flex italic justify-center items-center gap-3">
+      <div class="bg-gray-700 py-4 text-white text-center flex italic justify-center items-center gap-3">
         <a
           href="https://github.com/j3lte/deno-kv-hackathon"
           target="_blank"

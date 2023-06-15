@@ -91,7 +91,7 @@ export default function DecryptSecret(
         <div class="flex flex-col space-y-2">
           <button
             type="submit"
-            class="px-4 py-2 text-sm font-semibold text-white bg-blue-500 rounded"
+            class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 rounded"
           >
             Decrypt ({attempts} attempts left)
           </button>

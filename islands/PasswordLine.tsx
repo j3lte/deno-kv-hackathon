@@ -31,7 +31,7 @@ export default function PasswordLine({ autoFocus }: Props): JSX.Element {
         <button
           type="button"
           onClick={() => setShowPassword((pw) => !pw)}
-          class={`px-4 py-2 text-sm font-semibold text-white border(gray-500 2) rounded border-l-0 bg-blue-500 outline-none focus:outline-none`}
+          class={`px-4 py-2 text-sm font-semibold text-white border(gray-500 2) rounded border-l-0 bg-gray-700 outline-none focus:outline-none`}
           style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;"
           aria-label={showPassword ? "Hide password" : "Show password"}
         >

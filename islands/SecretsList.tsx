@@ -66,7 +66,7 @@ export default function SecretsList({ secrets, hideOwner }: Props) {
                 <a
                   href={`/secret/${secret.id}`}
                   target={"_blank"}
-                  class="text-blue-500 hover:text-blue-600"
+                  class="text-green-700 hover:text-gray-600"
                 >
                   {secret.id}
                 </a>

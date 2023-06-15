@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 
 const inputClasses =
-  "w-full px-3 py-2 bg-white rounded border(gray-500 2) disabled:(opacity-50 cursor-not-allowed)";
+  "w-full px-3 py-2 bg-white rounded border(gray-500 2) disabled:(opacity-50 cursor-not-allowed) focus:outline-none focus:border-gray-500";
 
 interface ITextareaProps extends JSX.HTMLAttributes<HTMLTextAreaElement> {
   autoGrowHeight?: boolean;
@@ -53,7 +53,7 @@ export default function Textarea(
         disabled={!IS_BROWSER || props.disabled}
         class={`${inputClasses} ${props.class ?? ""}`}
       />
-      <div class="absolute -bottom-5 right-0 text-xs text-gray-500">
+      <div class="absolute -bottom-5 right-0 text-xs text-gray-900">
         {areaSizeStr}
       </div>
     </div>

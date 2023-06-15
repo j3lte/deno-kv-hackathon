@@ -40,7 +40,7 @@ export function Header(props: { user: User | null; hideButton?: boolean }) {
                 <>
                   <ButtonLink
                     href="/auth/signin"
-                    class="hover:bg-blue-600 text-xs flex justify-center items-center gap-1"
+                    class="hover:bg-gray-600 text-xs flex justify-center items-center gap-1"
                   >
                     <div>Log in with GitHub</div>
                     <div class={`text-white`}>

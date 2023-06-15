@@ -79,7 +79,7 @@ export default function CreateSecret({ maxSecretLength }: Props): JSX.Element {
           <button
             type="button"
             onClick={reset}
-            class="px-4 py-2 text-sm font-semibold text-white bg-blue-500 rounded"
+            class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 rounded"
           >
             Create another
           </button>
@@ -128,7 +128,7 @@ export default function CreateSecret({ maxSecretLength }: Props): JSX.Element {
       <div class="flex flex-col">
         <button
           type="submit"
-          class="px-4 py-2 text-sm font-semibold text-white bg-blue-500 rounded mt-4"
+          class="px-4 py-2 text-sm font-semibold text-white bg-gray-700 rounded mt-4"
         >
           Create
         </button>
