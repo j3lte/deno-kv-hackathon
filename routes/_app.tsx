@@ -13,6 +13,7 @@ export default function App({ Component }: AppProps) {
         </div>
         <a
           href="https://github.com/j3lte/deno-kv-hackathon"
+          target="_blank"
           class="inline-block text-white hover:text-gray-400"
         >
           <BrandGithub />
