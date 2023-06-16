@@ -42,3 +42,8 @@ export interface SecretWithExtra extends Secret {
   user: User | null;
   burnStatus: BurnStatus;
 }
+
+export interface Stats {
+  created: number;
+  burned: number;
+}

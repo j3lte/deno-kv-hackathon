@@ -13,6 +13,7 @@ export const KV_SET = {
   USERS_BY_LAST_SIGNIN: "users_by_last_signin",
   SECRETS: "secrets",
   SECRETS_BY_USER: "secrets_by_user",
+  STATS: "stats",
 };
 
 export const MAX_SECRET_SIZE = getMaxSecretLength();

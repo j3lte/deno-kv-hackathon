@@ -4,6 +4,7 @@ import {
   Secret,
   SecretData,
   SecretWithExtra,
+  Stats,
   User,
   WithBurnStatus,
 } from "./types.ts";
@@ -42,6 +43,15 @@ export async function deleteSession(session: string) {
   await kv.delete([KV_SET.USERS_BY_SESSION, session]);
 }
 
+export async function listUsers(): Promise<User[]> {
+  const iter = await kv.list<User>({ prefix: [KV_SET.USERS] });
+  const users: User[] = [];
+  for await (const item of iter) {
+    users.push(item.value);
+  }
+  return users;
+}
+
 async function getUniqueId(): Promise<string> {
   const uuid = crypto.randomUUID();
   const existingSecret = await kv.get<Secret>([KV_SET.SECRETS, uuid]);
@@ -71,6 +81,8 @@ export async function addSecret(
   if (user) {
     await kv.set([KV_SET.SECRETS_BY_USER, user.id, id], secret);
   }
+
+  await addCreatedToStats();
 
   return id;
 }
@@ -148,6 +160,8 @@ export async function deleteSecret(id: string) {
   if (secret.uid) {
     await kv.delete([KV_SET.SECRETS_BY_USER, secret.uid, id]);
   }
+
+  await addBurnedToStats();
 }
 
 export async function updateSecretAttempts(id: string, attempts: number) {
@@ -159,5 +173,32 @@ export async function updateSecretAttempts(id: string, attempts: number) {
   await kv.set([KV_SET.SECRETS, id], {
     ...secret,
     decryptAttempts: attempts,
+  });
+}
+
+export async function getStats(): Promise<Stats> {
+  const res = await kv.get<Stats>([KV_SET.STATS]);
+  if (!res.value) {
+    return {
+      created: 0,
+      burned: 0,
+    };
+  }
+  return res.value;
+}
+
+export async function addCreatedToStats(): Promise<void> {
+  const stats = await getStats();
+  await kv.set([KV_SET.STATS], {
+    ...stats,
+    created: stats.created + 1,
+  });
+}
+
+export async function addBurnedToStats(): Promise<void> {
+  const stats = await getStats();
+  await kv.set([KV_SET.STATS], {
+    ...stats,
+    burned: stats.burned + 1,
   });
 }

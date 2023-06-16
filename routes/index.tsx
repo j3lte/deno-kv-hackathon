@@ -6,6 +6,7 @@ import { MAX_SECRET_SIZE } from "@utils/const.ts";
 
 import CreateSecret from "@islands/CreateSecret.tsx";
 import PageHead from "@components/PageHead.tsx";
+import SVG_Safe_Element from "../components/SVGSafe.tsx";
 
 interface Data {
   user: User | null;
@@ -28,7 +29,9 @@ export default function Home(props: PageProps<Data>) {
       <PageHead props={props} />
       <div class="p-4 mx-auto max-w-screen-md">
         <div class="mb-2">
-          <h2 class="text-xl font-semibold text-center">Create a Secret</h2>
+          <div className="flex justify-center">
+            <SVG_Safe_Element className="w-48 h-48" />
+          </div>
           <p class="text-center text-gray-900">
             Share a secret with anyone. It will be burned after it is read...
           </p>

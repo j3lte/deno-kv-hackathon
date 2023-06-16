@@ -55,11 +55,10 @@ export default function CreateSecret({ maxSecretLength }: Props): JSX.Element {
   if (createdSecretID.value !== null) {
     return (
       <div class="flex flex-col">
-        <div class="flex flex-col">
+        <div class="flex flex-col pt-2">
           <label for="secretCreated" class="text-sm font-semibold">
             Secret Created!
           </label>
-
           <div class="flex flex-row mt-8">
             <Input
               type="text"
@@ -67,7 +66,7 @@ export default function CreateSecret({ maxSecretLength }: Props): JSX.Element {
               id="secretCreated"
               value={secretUrl.value || ""}
               readOnly
-              class="flex-grow border-r-0 outline-none focus:outline-none"
+              class="flex-grow border-r-0 outline-none focus:outline-none font-bold"
               style="border-top-right-radius: 0px; border-bottom-right-radius: 0px;"
             />
             <CopyToClipboardButton
@@ -76,6 +75,10 @@ export default function CreateSecret({ maxSecretLength }: Props): JSX.Element {
               style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;"
             />
           </div>
+
+          <p class="text-center mt-1">
+            Copy the url and share it...
+          </p>
 
           <div class="flex flex-row items-center justify-center space-x-2 mb-8 mt-2">
             <ShareButton url={secretUrl.value || ""} type="whatsapp" />
