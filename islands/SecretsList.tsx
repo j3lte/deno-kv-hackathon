@@ -1,4 +1,6 @@
-import { useEffect, useState } from "preact/hooks";
+import { JSX } from "preact";
+import { useEffect } from "preact/hooks";
+import { useComputed, useSignal } from "@preact/signals";
 
 import { SecretWithUser } from "@utils/types.ts";
 import { IconAtOff, IconTrash } from "@utils/icons.ts";
@@ -8,11 +10,14 @@ export interface Props {
   hideOwner?: boolean;
 }
 
-export default function SecretsList({ secrets, hideOwner }: Props) {
-  const [secretsList, setSecretsList] = useState<SecretWithUser[]>([]);
+export default function SecretsList(
+  { secrets, hideOwner }: Props,
+): JSX.Element {
+  const secretsList = useSignal<SecretWithUser[]>([]);
+  const isEmpty = useComputed(() => secretsList.value.length === 0);
 
   useEffect(() => {
-    setSecretsList(secrets);
+    secretsList.value = secrets;
   }, [secrets]);
 
   const deleteSecret = async (id: string) => {
@@ -24,8 +29,8 @@ export default function SecretsList({ secrets, hideOwner }: Props) {
       if (json.error) {
         alert(json.error);
       } else if (json.deleted) {
-        setSecretsList((secrets) =>
-          secrets.filter((secret) => secret.id !== id)
+        secretsList.value = secretsList.value.filter(
+          (secret) => secret.id !== id,
         );
       }
     }
@@ -33,12 +38,12 @@ export default function SecretsList({ secrets, hideOwner }: Props) {
 
   return (
     <div class="flex flex-col mt-4">
-      {secretsList.length === 0 && (
+      {isEmpty.value && (
         <div class="flex flex-col items-center justify-center p-4">
           <p class="text-sm text-gray-500">No secrets found.</p>
         </div>
       )}
-      {secretsList.map((secret) => (
+      {secretsList.value.map((secret) => (
         <div class="flex flex-row items-center justify-between py-2 border-b border-gray-300">
           <div class="flex">
             {!hideOwner && (

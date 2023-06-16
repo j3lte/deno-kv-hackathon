@@ -1,5 +1,5 @@
 import { JSX } from "preact";
-import { useMemo, useState } from "preact/hooks";
+import { useComputed, useSignal } from "@preact/signals";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 
 import { Input } from "@components/Input.tsx";
@@ -13,18 +13,18 @@ export interface Props {
 }
 
 export default function CreateSecret({ maxSecretLength }: Props): JSX.Element {
-  const [createdSecretID, setCreatedSecretID] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const createdSecretID = useSignal<string | null>(null);
+  const error = useSignal<string | null>(null);
 
-  const reset = () => {
-    setCreatedSecretID(null);
-    setError(null);
-  };
-
-  const secretUrl = useMemo(() => {
+  const secretUrl = useComputed(() => {
     if (!IS_BROWSER || !createdSecretID || !window.location) return null;
     return `${window.location.origin}/secret/${createdSecretID}`;
-  }, [createdSecretID, window.location]);
+  });
+
+  const reset = () => {
+    createdSecretID.value = null;
+    error.value = null;
+  };
 
   const handleSubmit = (e: Event) => {
     e.preventDefault();
@@ -40,17 +40,17 @@ export default function CreateSecret({ maxSecretLength }: Props): JSX.Element {
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-          setCreatedSecretID(null);
-          setError(data.error);
+          createdSecretID.value = null;
+          error.value = data.error;
         } else {
-          setCreatedSecretID(data.id);
-          setError(null);
+          createdSecretID.value = data.id;
+          error.value = null;
           form.reset();
         }
       });
   };
 
-  if (createdSecretID) {
+  if (createdSecretID.value !== null) {
     return (
       <div class="flex flex-col">
         <div class="flex flex-col">
@@ -63,13 +63,13 @@ export default function CreateSecret({ maxSecretLength }: Props): JSX.Element {
               type="text"
               name="secretCreated"
               id="secretCreated"
-              value={secretUrl || ""}
+              value={secretUrl.value || ""}
               readOnly
               class="flex-grow border-r-0 outline-none focus:outline-none"
               style="border-top-right-radius: 0px; border-bottom-right-radius: 0px;"
             />
             <CopyToClipboardButton
-              data={secretUrl || ""}
+              data={secretUrl.value || ""}
               class={`px-4 py-2 text-sm font-semibold text-white border(gray-500 2) rounded border-l-0 outline-none focus:outline-none`}
               style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;"
             />
@@ -88,7 +88,7 @@ export default function CreateSecret({ maxSecretLength }: Props): JSX.Element {
     );
   }
 
-  if (error) {
+  if (error.value !== null) {
     return (
       <div class="flex flex-col space-y-4">
         <div class="flex flex-col space-y-2">

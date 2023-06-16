@@ -1,5 +1,5 @@
 import { JSX } from "preact";
-import { useState } from "preact/hooks";
+import { useSignal } from "@preact/signals";
 
 import { IconArrowBadgeLeft, IconArrowBadgeRight } from "@utils/icons.ts";
 
@@ -15,8 +15,8 @@ interface Props {
 export default function DecryptSecret(
   { id, attempts }: Props,
 ): JSX.Element {
-  const [error, setError] = useState<string | null>(null);
-  const [content, setContent] = useState<string | null>(null);
+  const error = useSignal<string | null>(null);
+  const content = useSignal<string | null>(null);
 
   const handleSubmit = (e: Event) => {
     e.preventDefault();
@@ -34,11 +34,11 @@ export default function DecryptSecret(
         if (data.updateAttempts) {
           window.location.reload();
         } else if (data.content) {
-          setContent(data.content);
-          setError(null);
+          content.value = data.content;
+          error.value = null;
         } else if (data.error) {
-          setContent(null);
-          setError(data.error);
+          content.value = null;
+          error.value = data.error;
         }
       });
   };
@@ -48,15 +48,15 @@ export default function DecryptSecret(
       class="flex flex-col space-y-4"
       onSubmit={handleSubmit}
     >
-      {!content && <PasswordLine autoFocus />}
+      {content.value === null && <PasswordLine autoFocus />}
 
-      {error && (
+      {error.value !== null && (
         <div class="flex flex-col space-y-2">
           <div class="text-red-500">{error}</div>
         </div>
       )}
 
-      {content && (
+      {content.value !== null && (
         <div class="flex flex-col space-y-2">
           <div class="flex flex-col space-y-2">
             <div class="flex flex-row justify-between items-center">
@@ -66,7 +66,7 @@ export default function DecryptSecret(
               <CopyToClipboardButton
                 className="px-2 aspect-square"
                 size={16}
-                data={content}
+                data={content.value}
                 aria-label={"Copy secret to clipboard"}
               />
             </div>
@@ -74,7 +74,7 @@ export default function DecryptSecret(
               class="h-32"
               name="secret"
               id="secret"
-              value={content}
+              value={content.value}
               readOnly
               autoGrowHeight
             />
@@ -87,7 +87,7 @@ export default function DecryptSecret(
         </div>
       )}
 
-      {!content && (
+      {content.value === null && (
         <div class="flex flex-col space-y-2">
           <button
             type="submit"

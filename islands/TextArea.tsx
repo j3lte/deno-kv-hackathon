@@ -1,5 +1,7 @@
 import { JSX } from "preact";
-import { useEffect, useMemo, useRef, useState } from "preact/hooks";
+import { computed, useSignal } from "@preact/signals";
+import { useEffect, useRef } from "preact/hooks";
+
 import { IS_BROWSER } from "$fresh/runtime.ts";
 
 const inputClasses =
@@ -11,20 +13,26 @@ interface ITextareaProps extends JSX.HTMLAttributes<HTMLTextAreaElement> {
 
 export default function Textarea(
   props: ITextareaProps,
-) {
+): JSX.Element {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const maxLength = props.maxLength ? Number(props.maxLength) : null;
-  const [size, setSize] = useState(0);
+  const size = useSignal(0);
+  const maxLength = useSignal(props.maxLength ? Number(props.maxLength) : null);
+  const areaSizeStr = computed(() => {
+    if (!IS_BROWSER || maxLength.value === null) return "";
+    return `${size}/${maxLength}`;
+  });
 
   const onChangeArea = (e: Event) => {
     const target = e.target as HTMLTextAreaElement;
     const val = target.value;
 
-    if (IS_BROWSER && maxLength !== null && val.length > maxLength) {
-      target.value = val.slice(0, maxLength);
+    if (
+      IS_BROWSER && maxLength.value !== null && val.length > maxLength.value
+    ) {
+      target.value = val.slice(0, maxLength.value);
     }
 
-    setSize(val.length);
+    size.value = val.length;
   };
 
   useEffect(() => {
@@ -37,11 +45,6 @@ export default function Textarea(
       el.style.height = (scrollHeight > 128 ? scrollHeight : 128) + "px";
     }
   }, [props.autoGrowHeight, props.value, props.autoGrowHeight]);
-
-  const areaSizeStr = useMemo(() => {
-    if (!IS_BROWSER || maxLength === null) return "";
-    return `${size}/${maxLength}`;
-  }, [size, maxLength]);
 
   return (
     <div class="flex w-full relative">

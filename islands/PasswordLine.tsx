@@ -1,5 +1,5 @@
 import { JSX } from "preact";
-import { useState } from "preact/hooks";
+import { computed, useSignal } from "@preact/signals";
 
 import { IconEye, IconEyeOff } from "@utils/icons.ts";
 
@@ -10,7 +10,11 @@ export interface Props {
 }
 
 export default function PasswordLine({ autoFocus }: Props): JSX.Element {
-  const [showPassword, setShowPassword] = useState(false);
+  const showPassword = useSignal(false);
+  const inputType = computed(() => showPassword.value ? "text" : "password");
+  const buttonLabel = computed(() =>
+    showPassword.value ? "Hide password" : "Show password"
+  );
 
   return (
     <div class="flex flex-col space-y-2">
@@ -19,7 +23,7 @@ export default function PasswordLine({ autoFocus }: Props): JSX.Element {
       </label>
       <div className="w-full flex flex-row">
         <Input
-          type={showPassword ? "text" : "password"}
+          type={inputType}
           name="secretPW"
           id="secretPW"
           autoComplete="off"
@@ -30,12 +34,12 @@ export default function PasswordLine({ autoFocus }: Props): JSX.Element {
         />
         <button
           type="button"
-          onClick={() => setShowPassword((pw) => !pw)}
+          onClick={() => showPassword.value = !showPassword.value}
           class={`px-4 py-2 text-sm font-semibold text-white border(gray-500 2) rounded border-l-0 bg-gray-700 outline-none focus:outline-none`}
           style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;"
-          aria-label={showPassword ? "Hide password" : "Show password"}
+          aria-label={buttonLabel}
         >
-          {showPassword ? <IconEyeOff /> : <IconEye />}
+          {showPassword.value ? <IconEyeOff /> : <IconEye />}
         </button>
       </div>
     </div>
