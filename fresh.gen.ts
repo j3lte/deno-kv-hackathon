@@ -20,7 +20,8 @@ import * as $$2 from "./islands/DecryptSecret.tsx";
 import * as $$3 from "./islands/PasswordLine.tsx";
 import * as $$4 from "./islands/ProfilePopOver.tsx";
 import * as $$5 from "./islands/SecretsList.tsx";
-import * as $$6 from "./islands/TextArea.tsx";
+import * as $$6 from "./islands/ShareButton.tsx";
+import * as $$7 from "./islands/TextArea.tsx";
 
 const manifest = {
   routes: {
@@ -44,7 +45,8 @@ const manifest = {
     "./islands/PasswordLine.tsx": $$3,
     "./islands/ProfilePopOver.tsx": $$4,
     "./islands/SecretsList.tsx": $$5,
-    "./islands/TextArea.tsx": $$6,
+    "./islands/ShareButton.tsx": $$6,
+    "./islands/TextArea.tsx": $$7,
   },
   baseUrl: import.meta.url,
 };

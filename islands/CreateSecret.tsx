@@ -4,6 +4,7 @@ import { IS_BROWSER } from "$fresh/runtime.ts";
 
 import { Input } from "@components/Input.tsx";
 import Textarea from "@islands/TextArea.tsx";
+import ShareButton from "@islands/ShareButton.tsx";
 
 import CopyToClipboardButton from "./CopyToClipboard.tsx";
 import PasswordLine from "./PasswordLine.tsx";
@@ -58,7 +59,7 @@ export default function CreateSecret({ maxSecretLength }: Props): JSX.Element {
             Secret Created!
           </label>
 
-          <div class="flex flex-row my-8">
+          <div class="flex flex-row mt-8">
             <Input
               type="text"
               name="secretCreated"
@@ -73,6 +74,12 @@ export default function CreateSecret({ maxSecretLength }: Props): JSX.Element {
               class={`px-4 py-2 text-sm font-semibold text-white border(gray-500 2) rounded border-l-0 outline-none focus:outline-none`}
               style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;"
             />
+          </div>
+
+          <div class="flex flex-row items-center justify-center space-x-2 mb-8 mt-2">
+            <ShareButton url={secretUrl.value || ""} type="whatsapp" />
+            <ShareButton url={secretUrl.value || ""} type="telegram" />
+            <ShareButton url={secretUrl.value || ""} type="email" />
           </div>
         </div>
         <div class="flex flex-col space-y-2">
