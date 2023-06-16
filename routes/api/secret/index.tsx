@@ -6,6 +6,7 @@ import { jsonResponse } from "@utils/util.ts";
 import { encrypt } from "@utils/crypto.ts";
 import { MAX_SECRET_SIZE } from "@utils/const.ts";
 import { log } from "@utils/log.ts";
+import { getBurnTimeFrame } from "@utils/date.ts";
 
 interface Data {
   user: User | null;
@@ -20,6 +21,7 @@ export const handler: Handlers<Data, SessionState> = {
 
     const secret = form.get("secret") as string;
     const password = form.get("secretPW") as string | null;
+    const burnAfter = form.get("burnAfter") as string | null;
 
     if (!secret) {
       return jsonResponse({
@@ -38,6 +40,10 @@ export const handler: Handlers<Data, SessionState> = {
       });
     }
 
+    const burnParsed = burnAfter !== null ? parseInt(burnAfter, 10) : 0;
+    const burnAfterCount = isNaN(burnParsed) ? 0 : burnParsed;
+    const burnTimeFrame = getBurnTimeFrame(burnAfterCount);
+
     try {
       const { iv, cipherText } = await encrypt(
         secret,
@@ -47,6 +53,7 @@ export const handler: Handlers<Data, SessionState> = {
         content: cipherText,
         iv,
         decryptAttempts: MAX_DECRYPT_ATTEMPTS,
+        burnAfter: burnTimeFrame,
       }, user?.id ?? "");
 
       return jsonResponse({

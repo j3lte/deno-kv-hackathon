@@ -1,8 +1,15 @@
 import "$std/dotenv/load.ts";
 
-import { Secret, SecretData, SecretWithUser, User } from "./types.ts";
+import {
+  Secret,
+  SecretData,
+  SecretWithExtra,
+  User,
+  WithBurnStatus,
+} from "./types.ts";
 import { KV_SET } from "./const.ts";
 import { log } from "./log.ts";
+import { getBurnStatus } from "@utils/date.ts";
 
 const kv = await Deno.openKv(Deno.env.get("KV_SECRET_STORE")!);
 
@@ -68,25 +75,40 @@ export async function addSecret(
   return id;
 }
 
-export async function getSecret(id: string): Promise<Secret | null> {
+export async function getSecret(
+  id: string,
+): Promise<Secret & WithBurnStatus | null> {
   const res = await kv.get<Secret>([KV_SET.SECRETS, id]);
 
   log("db", "getSecret", id);
 
-  return res.value || null;
+  if (!res.value) return null;
+
+  const burnStatus = getBurnStatus(res.value.createdAt, res.value.burnAfter);
+
+  return {
+    ...res.value,
+    burnStatus,
+  };
 }
 
-export async function listSecrets(): Promise<SecretWithUser[]> {
+export async function listSecrets(): Promise<SecretWithExtra[]> {
   const iter = await kv.list<Secret>(
     { prefix: [KV_SET.SECRETS] },
     { reverse: true },
   );
-  const secrets: SecretWithUser[] = [];
+  const secrets: SecretWithExtra[] = [];
   for await (const item of iter) {
     const user = item.value.uid ? await getUserById(item.value.uid) : null;
+    const burnStatus = getBurnStatus(
+      item.value.createdAt,
+      item.value.burnAfter,
+    );
+
     secrets.push({
       ...item.value,
       user,
+      burnStatus,
     });
   }
   return secrets;
@@ -94,17 +116,23 @@ export async function listSecrets(): Promise<SecretWithUser[]> {
 
 export async function listSecretsByUser(
   uid: string,
-): Promise<SecretWithUser[]> {
+): Promise<SecretWithExtra[]> {
   const user = await getUserById(uid);
   const iter = await kv.list<Secret>(
     { prefix: [KV_SET.SECRETS_BY_USER, uid] },
     { reverse: true },
   );
-  const secrets: SecretWithUser[] = [];
+  const secrets: SecretWithExtra[] = [];
   for await (const item of iter) {
+    const burnStatus = getBurnStatus(
+      item.value.createdAt,
+      item.value.burnAfter,
+    );
+
     secrets.push({
       ...item.value,
       user,
+      burnStatus,
     });
   }
   return secrets;

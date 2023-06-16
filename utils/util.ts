@@ -1,6 +1,6 @@
 import { HandlerContext } from "$fresh/server.ts";
 import { getSecret, getUserBySession } from "./db.ts";
-import { Secret, SessionState, User } from "./types.ts";
+import { Secret, SessionState, User, WithBurnStatus } from "./types.ts";
 
 export function redirect(location = "/") {
   const headers = new Headers();
@@ -59,7 +59,7 @@ export const getUserFromContext = async <T>(
 
 export const getSecretFromContext = async <T>(
   ctx: HandlerContext<T, SessionState>,
-): Promise<Secret | null> => {
+): Promise<Secret & WithBurnStatus | null> => {
   if (!ctx.params.id) {
     return null;
   }

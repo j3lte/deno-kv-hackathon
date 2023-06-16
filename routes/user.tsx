@@ -1,6 +1,6 @@
 import { HandlerContext, PageProps } from "$fresh/server.ts";
 
-import { SecretWithUser, SessionState, User } from "@utils/types.ts";
+import { SecretWithExtra, SessionState, User } from "@utils/types.ts";
 import { getUserBySession, listSecretsByUser } from "@utils/db.ts";
 import { redirect } from "@utils/util.ts";
 
@@ -9,7 +9,7 @@ import SecretsList from "@islands/SecretsList.tsx";
 
 interface Data {
   user: User | null;
-  secrets: SecretWithUser[];
+  secrets: SecretWithExtra[];
 }
 
 export async function handler(

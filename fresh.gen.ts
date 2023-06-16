@@ -14,14 +14,15 @@ import * as $8 from "./routes/auth/signout.ts";
 import * as $9 from "./routes/index.tsx";
 import * as $10 from "./routes/secret/[id]/index.tsx";
 import * as $11 from "./routes/user.tsx";
-import * as $$0 from "./islands/CopyToClipboard.tsx";
-import * as $$1 from "./islands/CreateSecret.tsx";
-import * as $$2 from "./islands/DecryptSecret.tsx";
-import * as $$3 from "./islands/PasswordLine.tsx";
-import * as $$4 from "./islands/ProfilePopOver.tsx";
-import * as $$5 from "./islands/SecretsList.tsx";
-import * as $$6 from "./islands/ShareButton.tsx";
-import * as $$7 from "./islands/TextArea.tsx";
+import * as $$0 from "./islands/BurnSlider.tsx";
+import * as $$1 from "./islands/CopyToClipboard.tsx";
+import * as $$2 from "./islands/CreateSecret.tsx";
+import * as $$3 from "./islands/DecryptSecret.tsx";
+import * as $$4 from "./islands/PasswordLine.tsx";
+import * as $$5 from "./islands/ProfilePopOver.tsx";
+import * as $$6 from "./islands/SecretsList.tsx";
+import * as $$7 from "./islands/ShareButton.tsx";
+import * as $$8 from "./islands/TextArea.tsx";
 
 const manifest = {
   routes: {
@@ -39,14 +40,15 @@ const manifest = {
     "./routes/user.tsx": $11,
   },
   islands: {
-    "./islands/CopyToClipboard.tsx": $$0,
-    "./islands/CreateSecret.tsx": $$1,
-    "./islands/DecryptSecret.tsx": $$2,
-    "./islands/PasswordLine.tsx": $$3,
-    "./islands/ProfilePopOver.tsx": $$4,
-    "./islands/SecretsList.tsx": $$5,
-    "./islands/ShareButton.tsx": $$6,
-    "./islands/TextArea.tsx": $$7,
+    "./islands/BurnSlider.tsx": $$0,
+    "./islands/CopyToClipboard.tsx": $$1,
+    "./islands/CreateSecret.tsx": $$2,
+    "./islands/DecryptSecret.tsx": $$3,
+    "./islands/PasswordLine.tsx": $$4,
+    "./islands/ProfilePopOver.tsx": $$5,
+    "./islands/SecretsList.tsx": $$6,
+    "./islands/ShareButton.tsx": $$7,
+    "./islands/TextArea.tsx": $$8,
   },
   baseUrl: import.meta.url,
 };

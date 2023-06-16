@@ -8,6 +8,7 @@ import ShareButton from "@islands/ShareButton.tsx";
 
 import CopyToClipboardButton from "./CopyToClipboard.tsx";
 import PasswordLine from "./PasswordLine.tsx";
+import BurnSlider from "./BurnSlider.tsx";
 
 export interface Props {
   maxSecretLength: number;
@@ -131,6 +132,8 @@ export default function CreateSecret({ maxSecretLength }: Props): JSX.Element {
       </div>
 
       <PasswordLine />
+
+      <BurnSlider />
 
       <div class="flex flex-col">
         <button

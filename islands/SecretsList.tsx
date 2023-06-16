@@ -2,18 +2,18 @@ import { JSX } from "preact";
 import { useEffect } from "preact/hooks";
 import { useComputed, useSignal } from "@preact/signals";
 
-import { SecretWithUser } from "@utils/types.ts";
+import { SecretWithExtra } from "@utils/types.ts";
 import { IconAtOff, IconTrash } from "@utils/icons.ts";
 
 export interface Props {
-  secrets: SecretWithUser[];
+  secrets: SecretWithExtra[];
   hideOwner?: boolean;
 }
 
 export default function SecretsList(
   { secrets, hideOwner }: Props,
 ): JSX.Element {
-  const secretsList = useSignal<SecretWithUser[]>([]);
+  const secretsList = useSignal<SecretWithExtra[]>([]);
   const isEmpty = useComputed(() => secretsList.value.length === 0);
 
   useEffect(() => {
@@ -92,6 +92,13 @@ export default function SecretsList(
               )}
               <p class="text-xs">
                 <b>Created:</b> {secret.createdAt}
+              </p>
+              <p
+                class={`text-xs ${
+                  secret.burnStatus.burned ? "text-red-700" : ""
+                }`}
+              >
+                <b>Burn within:</b> {secret.burnStatus.burnWithin}
               </p>
               <p class="text-xs">
                 <b>Decrypt attempts:</b> {secret.decryptAttempts}

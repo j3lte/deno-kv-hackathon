@@ -1,3 +1,5 @@
+import { ManipulateType } from "dayjs";
+
 export interface SessionState {
   session: string | null;
 }
@@ -9,10 +11,16 @@ export interface User {
   avatarUrl: string;
 }
 
+export interface BurnTimeFrame {
+  count: number;
+  unit: ManipulateType;
+}
+
 export interface SecretData {
   content: string;
   iv: string;
   decryptAttempts: number;
+  burnAfter: BurnTimeFrame;
 }
 
 export interface Secret extends SecretData {
@@ -21,6 +29,16 @@ export interface Secret extends SecretData {
   createdAt: string;
 }
 
-export interface SecretWithUser extends Secret {
+export interface BurnStatus {
+  burned: boolean;
+  burnWithin: string;
+}
+
+export interface WithBurnStatus {
+  burnStatus: BurnStatus;
+}
+
+export interface SecretWithExtra extends Secret {
   user: User | null;
+  burnStatus: BurnStatus;
 }
