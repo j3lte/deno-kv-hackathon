@@ -22,7 +22,7 @@
     "twind": "https://esm.sh/twind@0.16.19",
     "twind/": "https://esm.sh/twind@0.16.19/",
     "$std/": "https://deno.land/std@0.191.0/",
-    "kv_oauth": "https://deno.land/x/deno_kv_oauth@v0.2.0-beta/mod.ts",
+    "kv_oauth": "https://deno.land/x/deno_kv_oauth@v0.2.2/mod.ts",
     "$flowbite/": "https://deno.land/x/fresh_flowbite@1.0.0-1.6.3/"
   }
 }
