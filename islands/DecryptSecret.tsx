@@ -1,7 +1,7 @@
 import { JSX } from "preact";
 import { useSignal } from "@preact/signals";
 
-import { IconArrowBadgeLeft, IconArrowBadgeRight } from "@utils/icons.ts";
+import { IconFlame } from "@utils/icons.ts";
 
 import PasswordLine from "./PasswordLine.tsx";
 import Textarea from "./TextArea.tsx";
@@ -80,9 +80,9 @@ export default function DecryptSecret(
             />
           </div>
           <div class="text-xs text-gray-500 flex items-center justify-center">
-            <IconArrowBadgeRight />
+            <IconFlame />
             <span>Note: after viewing this secret, it is deleted!</span>
-            <IconArrowBadgeLeft />
+            <IconFlame />
           </div>
         </div>
       )}
