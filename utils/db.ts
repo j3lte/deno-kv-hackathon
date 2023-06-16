@@ -51,7 +51,7 @@ export async function addSecret(
   const id = await getUniqueId();
   const user = uid ? await getUserById(uid) : null;
 
-  log("db", "addSecret", id, data, user);
+  log("db", "addSecret", id, user?.id);
 
   const secret: Secret = {
     ...data,
