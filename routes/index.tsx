@@ -27,6 +27,12 @@ export default function Home(props: PageProps<Data>) {
     <>
       <PageHead props={props} />
       <div class="p-4 mx-auto max-w-screen-md">
+        <div class="mb-2">
+          <h2 class="text-xl font-semibold text-center">Create a Secret</h2>
+          <p class="text-center text-gray-900">
+            Share a secret with anyone. It will be burned after it is read...
+          </p>
+        </div>
         <CreateSecret maxSecretLength={MAX_SECRET_SIZE} />
       </div>
     </>
