@@ -5,6 +5,7 @@ import { MAX_DECRYPT_ATTEMPTS } from "@utils/const.ts";
 import { jsonResponse } from "@utils/util.ts";
 import { encrypt } from "@utils/crypto.ts";
 import { MAX_SECRET_SIZE } from "@utils/const.ts";
+import { log } from "@utils/log.ts";
 
 interface Data {
   user: User | null;
@@ -14,6 +15,8 @@ export const handler: Handlers<Data, SessionState> = {
   async POST(req, ctx) {
     const form = await req.formData();
     const user = await getUserBySession(ctx.state.session ?? "");
+
+    log("secret", `POST /api/secret (user: ${user?.id ?? "null"})`);
 
     const secret = form.get("secret") as string;
     const password = form.get("secretPW") as string | null;

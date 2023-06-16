@@ -4,6 +4,7 @@ import { SessionState, User } from "@utils/types.ts";
 import { getSecretFromContext, isAdmin, jsonResponse } from "@utils/util.ts";
 import { decrypt } from "@utils/crypto.ts";
 import { deleteSecret } from "@utils/db.ts";
+import { log } from "@utils/log.ts";
 
 interface Data {
   user: User | null;
@@ -26,6 +27,8 @@ export const handler: Handlers<Data, SessionState> = {
         error: "Password cannot be empty",
       });
     }
+
+    log("secret", `POST /api/secret/${secret.id} (user: ${secret.uid})`);
 
     try {
       const decrypted = await decrypt(secret.content, secret.iv, password);
@@ -64,6 +67,8 @@ export const handler: Handlers<Data, SessionState> = {
         error: "Unknown user",
       });
     }
+
+    log("secret", `DELETE /api/secret/${secret.id} (user: ${user.id})`);
 
     if (isAdmin(user.id)) {
       await deleteSecret(secret.id);

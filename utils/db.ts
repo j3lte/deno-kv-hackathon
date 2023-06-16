@@ -2,6 +2,7 @@ import "$std/dotenv/load.ts";
 
 import { Secret, SecretData, SecretWithUser, User } from "./types.ts";
 import { KV_SET } from "./const.ts";
+import { log } from "./log.ts";
 
 const kv = await Deno.openKv(Deno.env.get("KV_SECRET_STORE")!);
 
@@ -50,6 +51,8 @@ export async function addSecret(
   const id = await getUniqueId();
   const user = uid ? await getUserById(uid) : null;
 
+  log("db", "addSecret", id, data, user);
+
   const secret: Secret = {
     ...data,
     id,
@@ -67,6 +70,9 @@ export async function addSecret(
 
 export async function getSecret(id: string): Promise<Secret | null> {
   const res = await kv.get<Secret>([KV_SET.SECRETS, id]);
+
+  log("db", "getSecret", id);
+
   return res.value || null;
 }
 
@@ -108,6 +114,8 @@ export async function deleteSecret(id: string) {
   const secret = await getSecret(id);
   if (!secret) return;
 
+  log("db", "deleteSecret", id);
+
   await kv.delete([KV_SET.SECRETS, id]);
   if (secret.uid) {
     await kv.delete([KV_SET.SECRETS_BY_USER, secret.uid, id]);
@@ -117,6 +125,8 @@ export async function deleteSecret(id: string) {
 export async function updateSecretAttempts(id: string, attempts: number) {
   const secret = await getSecret(id);
   if (!secret) return;
+
+  log("db", "updateSecretAttempts", id, attempts);
 
   await kv.set([KV_SET.SECRETS, id], {
     ...secret,
