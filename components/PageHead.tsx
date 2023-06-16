@@ -25,7 +25,14 @@ export default function PageHead({ props, hideButton }: Props): JSX.Element {
       <Head>
         <title>{APP_NAME}</title>
         <link rel="dns-prefetch" href="https://unpkg.com/" />
-        <link rel="dns-preconnect" href="https://unpkg.com/" />
+        <link rel="preconnect" href="https://unpkg.com/" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="crossorigin"
+        />
+
         <link
           rel="apple-touch-icon"
           sizes="180x180"
@@ -48,6 +55,10 @@ export default function PageHead({ props, hideButton }: Props): JSX.Element {
           // @ts-ignore - Typescript doesn't recognize color as a valid attribute for link
           <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000" />
         }
+        <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
         <meta name="twitter:card" content="summary_large_image" />
