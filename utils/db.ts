@@ -14,6 +14,10 @@ import { getBurnStatus } from "@utils/date.ts";
 
 const kv = await Deno.openKv(Deno.env.get("KV_SECRET_STORE")!);
 
+addEventListener("beforeunload", async () => {
+  await kv.close();
+});
+
 export async function setUserWithSession(user: User, session: string) {
   await kv
     .atomic()
