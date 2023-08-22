@@ -14,10 +14,12 @@ export default function App({ Component }: AppProps) {
           class="inline-block text-white hover:text-gray-400 flex items-center gap-2"
           aria-label="Open Github repository for Exchange Secrets"
         >
-          <span className="">
-            Open Source
-          </span>
-          <IconBrandGithub />
+          <div className="flex flex-row gap-3 items-center">
+            <span className="">
+              Open Source
+            </span>
+            <IconBrandGithub />
+          </div>
         </a>
         <div className="bg-gray-100 w-1 h-1" />
         <a
@@ -26,10 +28,12 @@ export default function App({ Component }: AppProps) {
           class="inline-block text-white hover:text-gray-400 flex items-center gap-2"
           aria-label="Open Deno Deploy"
         >
-          <span className="">
-            Powered by Deno Deploy
-          </span>
-          <IconBrandDeno />
+          <div className="flex flex-row gap-3 items-center">
+            <span className="">
+              Powered by Deno Deploy
+            </span>
+            <IconBrandDeno />
+          </div>
         </a>
       </div>
     </body>
